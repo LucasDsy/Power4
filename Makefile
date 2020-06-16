@@ -34,7 +34,7 @@ run :
 	@echo Run main file
 	@echo --------
 	@echo
-	java -cp target/Power4-1.0-SNAPSHOT.jar app.App
+	mvn javafx:run
 
 
 
