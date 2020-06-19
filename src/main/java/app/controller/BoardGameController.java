@@ -1,32 +1,23 @@
 package app.controller;
 
+import app.view.InterfaceView;
+import app.view.GridView;
 import app.view.TokenView;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
+import javafx.event.EventHandler;
+import java.util.ArrayList;
 
-public class BoardGameController extends Scene {
-    private GridPane grid;
+public class BoardGameController {
 
-    public BoardGameController(Group root, int cols, int rows, int gap) {
-        super(root, cols*100+(gap-1)*cols, rows*100+(gap-1)*rows, Color.BLUE);
+    private String title;
+    private InterfaceView my_interface;
 
-        this.grid = new GridPane();
-        this.grid.setVgap(gap);
-        this.grid.setHgap(gap);
-
-        for (int i = 0; i < cols; i++) {
-            for (int j = 0; j < rows; j++) {
-                TokenView tokenView = new TokenView();
-                setOnMouseHoverListeners(tokenView);
-                grid.add(tokenView, i, j);
-            }
-        }
-
-        root.getChildren().add(grid);
+    public BoardGameController(String title) {
+        this.title = title;
+        this.my_interface = new InterfaceView();
+        this.my_interface.initInterface();
+        this.addListeners();
     }
 
     private void setOnMouseHoverListeners(final TokenView tokenView) {
@@ -43,5 +34,10 @@ public class BoardGameController extends Scene {
                 tokenView.setGrey();
             }
         });
+    }
+
+    private void addListeners() {
+        ArrayList<TokenView> tokens = this.my_interface.getGrid().getTokens();
+        tokens.forEach((t) -> setOnMouseHoverListeners(t)); 
     }
 }
