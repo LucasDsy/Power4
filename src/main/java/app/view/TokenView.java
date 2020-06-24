@@ -5,7 +5,7 @@ import javafx.scene.shape.Circle;
 
 public class TokenView extends Circle {
 
-    public TokenView(int radius) {
+    public TokenView(double radius) {
         super(radius, Color.GREY);
     }
 
