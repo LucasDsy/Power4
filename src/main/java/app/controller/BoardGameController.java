@@ -1,23 +1,40 @@
 package app.controller;
 
-import app.view.InterfaceView;
-import app.view.GridView;
+import app.view.BoardGameView;
 import app.view.TokenView;
-
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.event.EventHandler;
-import java.util.ArrayList;
 
-public class BoardGameController {
+import java.util.List;
 
-    private String title;
-    private InterfaceView my_interface;
+public class BoardGameController extends Stage {
+    private static final int width = 700;
+    private static final int height = 800;
+    private static final int cols = 7;
+    private static final int rows = 6;
+    private Scene scene;
+    private BoardGameView boardGameView;
 
-    public BoardGameController(String title) {
-        this.title = title;
-        this.my_interface = new InterfaceView();
-        this.my_interface.initInterface();
-        this.addListeners();
+    public BoardGameController() {
+        super();
+
+        this.setTitle("Puissance 4");
+        this.setResizable(false);
+        this.setWidth(width);
+        this.setHeight(height);
+
+        int tokenSize = width/cols;
+        this.boardGameView = new BoardGameView(cols, rows, tokenSize);
+        
+        this.setListeners();
+
+        this.scene = new Scene(boardGameView);
+        this.scene.setFill(Color.BLUE);
+        
+        this.setScene(scene);
     }
 
     private void setOnMouseHoverListeners(final TokenView tokenView) {
@@ -36,8 +53,11 @@ public class BoardGameController {
         });
     }
 
-    private void addListeners() {
-        ArrayList<TokenView> tokens = this.my_interface.getGrid().getTokens();
-        tokens.forEach((t) -> setOnMouseHoverListeners(t)); 
+    private void setListeners() {
+        List<TokenView> tokenViewList = boardGameView.getGridView().getTokenViewList();
+        
+        for (TokenView tokenView : tokenViewList) {
+            setOnMouseHoverListeners(tokenView);
+        }
     }
 }

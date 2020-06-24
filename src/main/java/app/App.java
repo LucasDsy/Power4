@@ -1,12 +1,18 @@
 package app;
 
 import app.controller.BoardGameController;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class App {
+public class App extends Application {
+    
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage = new BoardGameController();
+        primaryStage.show();
+    }
  
     public static void main(String[] args) {
-
-        BoardGameController my_controller = new BoardGameController("Puissance 4");
-    
+        Application.launch(args);
     }
 }

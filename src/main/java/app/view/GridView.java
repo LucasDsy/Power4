@@ -1,39 +1,34 @@
 package app.view;
 
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class GridView extends Scene {
+public class GridView extends GridPane {
+    private List<TokenView> tokenViewList;
 
-    private GridPane grid;
-    private ArrayList<TokenView> tokens;
+    public GridView(int nbCols, int nbRows, int tokenSize) {
+        super();
 
-    public GridView(Group root, int cols, int rows, int gap) {
-        super(root, cols*100+(gap-1)*cols, rows*100+(gap-1)*rows, Color.BLUE);
+        int tokenRadius = (tokenSize/2)*9/10;
+        int tokenGap = tokenSize/10;
+        
+        this.setVgap(tokenGap);
+        this.setHgap(tokenGap);
 
-        this.grid = new GridPane();
-        this.grid.setVgap(gap);
-        this.grid.setHgap(gap);
+        tokenViewList = new ArrayList<TokenView>();
 
-        this.tokens = new ArrayList<TokenView>();
-
-        for (int i = 0; i < cols; i++) {
-            for (int j = 0; j < rows; j++) {
-                TokenView tokenView = new TokenView();
-                this.tokens.add(tokenView);
-                grid.add(tokenView, i, j);
+        for (int i = 0; i < nbCols; i++) {
+            for (int j = 0; j < nbRows; j++) {
+                TokenView tokenView = new TokenView(tokenRadius);
+                tokenViewList.add(tokenView);
+                this.add(tokenView, i, j);
             }
         }
-
-        root.getChildren().add(grid);
     }
 
-    public ArrayList getTokens() {
-        return this.tokens;
+    public List<TokenView> getTokenViewList() {
+        return this.tokenViewList;
     }
 }

@@ -5,8 +5,8 @@ import javafx.scene.shape.Circle;
 
 public class TokenView extends Circle {
 
-    public TokenView() {
-        super(50, Color.GREY);
+    public TokenView(int radius) {
+        super(radius, Color.GREY);
     }
 
     public void setRed() {
