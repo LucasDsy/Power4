@@ -9,6 +9,10 @@ public class TokenView extends Circle {
         super(radius, Color.GREY);
     }
 
+    public boolean isAlreadyColored() {
+        return (super.getFill() == Color.RED || super.getFill() == Color.YELLOW);
+    }
+
     public void setRed() {
         super.setFill(Color.RED);
     }

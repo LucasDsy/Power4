@@ -1,9 +1,15 @@
 package app.model;
 
-public class Token extends Element {
+import app.model.enums.State;
 
-    public Token(int x, int y) {
-        super(x,y);
+public class Token {
+    State state;
+
+    public Token() {
+        state = State.FREE;
     }
 
+    public void setState(State state) {
+        this.state = state;
+    }
 }

@@ -1,5 +1,6 @@
 package app.view;
 
+import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class GridView extends GridPane {
         super.setPrefSize(nbCols*100, nbRows*100);
         super.setVgap(tokenGap);
         super.setHgap(tokenGap);
+        super.setAlignment(Pos.CENTER);
 
         this.tokenViewList = new ArrayList<TokenView>();
 
@@ -28,6 +30,15 @@ public class GridView extends GridPane {
                 this.add(tokenView, i, j);
             }
         }
+    }
+
+    public Integer[] getTokenViewCoordinates(TokenView tokenView) {
+        Integer[] coordinates = {
+            GridPane.getColumnIndex(tokenView),
+            GridPane.getRowIndex(tokenView)
+        };
+
+       return coordinates;
     }
 
     public List<TokenView> getTokenViewList() {
