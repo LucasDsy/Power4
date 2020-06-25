@@ -9,9 +9,9 @@ import javafx.scene.paint.Color;
 
 public class BoardGameView extends VBox {
 
-    public BoardGameView(GridView gridView) {
+    public BoardGameView(GridView gridView, ScoreView scoreView) {
         super(30);
         super.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        super.getChildren().addAll(gridView, new ScoreView());
+        super.getChildren().addAll(gridView, scoreView);
     }
 }
