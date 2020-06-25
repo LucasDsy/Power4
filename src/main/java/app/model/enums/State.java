@@ -11,6 +11,10 @@ public enum State {
         this.number = number;
     }
 
+    public int getNumber() {
+        return this.number;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(number);
