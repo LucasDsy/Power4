@@ -9,12 +9,22 @@ import java.util.List;
 public class GridView extends GridPane {
     private List<TokenView> tokenViewList;
 
+    private int nbCols;
+    private int nbRows;
+
+    private double tokenSize;
+    private double tokenRadius;
+    private double tokenGap;
+
     public GridView(int nbCols, int nbRows) {
         super();
 
-        double tokenSize = (nbCols/nbRows)*100;
-        double tokenRadius = (tokenSize/2)*9/10;
-        double tokenGap = tokenSize/10;
+        this.nbCols = nbCols;
+        this.nbRows = nbRows;
+
+        this.tokenSize = (this.nbCols/this.nbRows)*100;
+        this.tokenRadius = (this.tokenSize/2)*9/10;
+        this.tokenGap = this.tokenSize/10;
         
         super.setPrefSize(nbCols*100, nbRows*100);
         super.setVgap(tokenGap);
@@ -22,10 +32,14 @@ public class GridView extends GridPane {
         super.setAlignment(Pos.CENTER);
 
         this.tokenViewList = new ArrayList<TokenView>();
+        this.initTokenView();
+        
+    }
 
-        for (int i = 0; i < nbCols; i++) {
-            for (int j = 0; j < nbRows; j++) {
-                TokenView tokenView = new TokenView(tokenRadius);
+    public void initTokenView() {
+        for (int i = 0; i < this.nbCols; i++) {
+            for (int j = 0; j < this.nbRows; j++) {
+                TokenView tokenView = new TokenView(this.tokenRadius);
                 this.tokenViewList.add(tokenView);
                 this.add(tokenView, i, j);
             }

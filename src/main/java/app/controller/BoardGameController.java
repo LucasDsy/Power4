@@ -11,15 +11,16 @@ public class BoardGameController extends Stage {
     private GameModel gameModel;
     private BoardGameView boardGameView;
     private GridController gridController;
+    private ScoreController scoreController;
 
     public BoardGameController() {
         super();
         this.gameModel = new GameModel();
 
-        gridController = new GridController(cols, rows, gameModel);
-        // scoreController = new ScoreController(gameModel)
+        scoreController = new ScoreController(gameModel);
+        gridController = new GridController(cols, rows, gameModel, scoreController);
 
-        this.boardGameView = new BoardGameView(gridController.getGridView());
+        this.boardGameView = new BoardGameView(gridController.getGridView(),scoreController.getScoreView());
 
         this.setScene(new Scene(boardGameView));
 

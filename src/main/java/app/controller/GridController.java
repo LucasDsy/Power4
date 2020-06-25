@@ -2,6 +2,8 @@ package app.controller;
 
 import java.util.List;
 
+import app.controller.ScoreController;
+
 import app.model.GameModel;
 import app.model.GridModel;
 import app.model.enums.State;
@@ -15,10 +17,12 @@ public class GridController {
     private GridModel gridModel;
     private GridView gridView;
     private GameModel gameModel;
+    private ScoreController scoreController;
 
-    public GridController(int nbCols, int nbRows, GameModel gameModel) {
+    public GridController(int nbCols, int nbRows, GameModel gameModel, ScoreController scoreController) {
         this.gridModel = new GridModel(nbCols, nbRows);
         this.gridView = new GridView(nbCols, nbRows);
+        this.scoreController = scoreController;
         this.gameModel = gameModel;
         
         this.setListeners();
@@ -33,7 +37,10 @@ public class GridController {
     }
 
     public void endGame() {
-        this.gridModel.initToken();
+        System.out.println("Fin de la partie!");
+        this.scoreController.updateScore();
+        this.gridView.initTokenView();
+        this.setListeners();
     }
 
     private void setOnMouseHoverListeners(final TokenView tokenView) {
@@ -131,7 +138,9 @@ public class GridController {
         if(!result)
             result = parseGrid(row, col, currentPlayer, 0, -1, -1); /** Diagonale 4 **/
 
-        if(result)
-            System.out.println("Game done!");
+        if(result) {
+            this.endGame();
+        }
+
     }
 }
