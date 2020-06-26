@@ -58,4 +58,13 @@ public class GridView extends GridPane {
     public List<TokenView> getTokenViewList() {
         return this.tokenViewList;
     }
+
+    public TokenView getTokenView(int col, int row) {
+        TokenView tmp = null;
+        for (TokenView tokenView: this.tokenViewList) {
+            if(GridPane.getColumnIndex(tokenView) == col && GridPane.getRowIndex(tokenView) == row)
+                tmp = tokenView;
+        }
+        return tmp;
+    }
 }

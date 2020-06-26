@@ -39,6 +39,7 @@ public class GridController {
     public void endGame() {
         System.out.println("Fin de la partie!");
         this.scoreController.updateScore();
+        this.gridModel.initToken();
         this.gridView.initTokenView();
         this.setListeners();
     }
@@ -51,16 +52,21 @@ public class GridController {
                 Integer[] coordinates = gridView.getTokenViewCoordinates(tokenView);
 
                 if (coordinates[0] != null || coordinates[1] != null) {
-                    gridModel.getToken(coordinates[0], coordinates[1]).setState(gameModel.getCurrentPlayer());
+
+                    /* Calculate the height of the stack */
+                    int row = gridModel.stackTokens(coordinates[0]);
+                    gridModel.getToken(coordinates[0], row).setState(gameModel.getCurrentPlayer());
+                    /* Define the TokenView who need to change color in function of the stack */
+                    TokenView newTokenView = gridView.getTokenView(coordinates[0], row);
                     /** Check if new token get you a winning line **/
-                    checkNewTokenRows(coordinates[0], coordinates[1], gridModel.getToken(coordinates[0], coordinates[1]).getState().getNumber());
+                    checkNewTokenRows(coordinates[0], row, gridModel.getToken(coordinates[0], coordinates[1]).getState().getNumber());
                     switch (gameModel.getCurrentPlayer()) {
                         case P1:
-                            tokenView.setRed();
+                            newTokenView.setRed();
                             break;
 
                         case P2:
-                            tokenView.setYellow();
+                            newTokenView.setYellow();
                             break;
 
                         case FREE:
@@ -102,12 +108,12 @@ public class GridController {
         }
     }
 
-    public boolean parseGrid(int row, int col, int tokenType, int number, int direction_x, int direction_y) {
+    public boolean parseGrid(int col, int row, int tokenType, int number, int direction_x, int direction_y) {
 
         Token token;
         boolean rslt = false;
 
-        if(row < this.gridModel.getNbRows() && row >= 0 && col < this.gridModel.getNbCols() && col >= 0) {
+        if(row < this.gridModel.getNbRows() && row >= 0 && col+1 < this.gridModel.getNbCols() && col >= 0) {
             token = this.gridModel.getToken(row,col);
             if (number >= 4) {
                 rslt = true;
@@ -119,24 +125,24 @@ public class GridController {
         return rslt;
     }
 
-    public void checkNewTokenRows(int row, int col, int currentPlayer) {
+    public void checkNewTokenRows(int col, int row, int currentPlayer) {
         boolean result = false;
         /* Check dans chaque direction */
-        result = parseGrid(row, col, currentPlayer, 0, 1, 0); /** Ligne droite **/
+        result = parseGrid(col, row, currentPlayer, 0, 1, 0); /** Ligne droite **/
         if(!result)
-            result = parseGrid(row, col, currentPlayer, 0, 0, 1); /** Ligne haute **/
+            result = parseGrid(col, row, currentPlayer, 0, 0, 1); /** Ligne haute **/
         if(!result)
-            result = parseGrid(row, col, currentPlayer, 0, -1, 0); /** Ligne gauche **/
+            result = parseGrid(col, row, currentPlayer, 0, -1, 0); /** Ligne gauche **/
         if(!result)
-            result = parseGrid(row, col, currentPlayer, 0, 0, -1); /** Ligne basse **/
+            result = parseGrid(col, row, currentPlayer, 0, 0, -1); /** Ligne basse **/
         if(!result)
-            result = parseGrid(row, col, currentPlayer, 0, 1, 1); /** Diagonale 1 **/
+            result = parseGrid(col, row, currentPlayer, 0, 1, 1); /** Diagonale 1 **/
         if(!result)
-            result = parseGrid(row, col, currentPlayer, 0, -1, 1); /** Diagonale 2 **/
+            result = parseGrid(col, row, currentPlayer, 0, -1, 1); /** Diagonale 2 **/
         if(!result)
-            result = parseGrid(row, col, currentPlayer, 0, 1, -1); /** Diagonale 3 **/
+            result = parseGrid(col, row, currentPlayer, 0, 1, -1); /** Diagonale 3 **/
         if(!result)
-            result = parseGrid(row, col, currentPlayer, 0, -1, -1); /** Diagonale 4 **/
+            result = parseGrid(col, row, currentPlayer, 0, -1, -1); /** Diagonale 4 **/
 
         if(result) {
             this.endGame();
