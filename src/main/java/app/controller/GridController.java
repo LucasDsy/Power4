@@ -111,16 +111,16 @@ public class GridController {
         }
     }
 
-    public boolean parseGrid(int col, int row, int tokenType, int number, int direction_x, int direction_y) {
+    public boolean parseGrid(int col, int row, int tokenType, int number, int direction_y, int direction_x) {
 
         Token token;
         boolean rslt = false;
         if(row < this.gridModel.getNbRows() && col < this.gridModel.getNbCols() && row >= 0 && col >= 0) {
             token = this.gridModel.getToken(col,row);
-            if (number >= 4) {
+            if (number >= 5) {
                 rslt = true;
-            } else if (token.getState().getNumber() != 0 && token.getState().getNumber() == tokenType) {
-                rslt = parseGrid(row+direction_x, col+direction_y, tokenType, number+1, direction_x, direction_y);
+            } else if (token.getState().getNumber() == tokenType) {
+                rslt = parseGrid(col + direction_y, row + direction_x, tokenType, number+1, direction_y, direction_x);
             }
         }
         
@@ -130,14 +130,22 @@ public class GridController {
     public void checkNewTokenRows(int col, int row, int currentPlayer) {
         boolean result = false;
         /* Check dans chaque direction */
-        result = parseGrid(col, row, currentPlayer, 0, 1, 0); /** Ligne droite **/
+        result = parseGrid(col, row, currentPlayer, 1, 1, 0); /** Bas **/
         if(!result)
-            result = parseGrid(col, row, currentPlayer, 0, 0, 1); /** Ligne haute **/
+            result = parseGrid(col, row, currentPlayer, 1,-1, 0); /** Haut **/
         if(!result)
-            result = parseGrid(col, row, currentPlayer, 0, -1, 0); /** Ligne gauche **/
+            result = parseGrid(col, row, currentPlayer, 1, 0, 1); /** Droite **/
         if(!result)
-            result = parseGrid(col, row, currentPlayer, 0, 0, -1); /** Ligne basse **/
-       
+            result = parseGrid(col, row, currentPlayer, 1, 0, 1); /** Gauche **/
+        if(!result)
+            result = parseGrid(col, row, currentPlayer, 1, 1, 1); /** Diag 1 **/
+        if(!result)
+            result = parseGrid(col, row, currentPlayer, 1,-1, 1); /** Diag 2 **/
+        if(!result)
+            result = parseGrid(col, row, currentPlayer, 1, 1,-1); /** Diag 3 **/
+        if(!result)
+            result = parseGrid(col, row, currentPlayer, 0,-1,-1); /** Diag 4 **/
+
         if(result) {
             this.endGame();
         }
