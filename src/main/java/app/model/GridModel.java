@@ -26,12 +26,10 @@ public class GridModel {
     }
 
     public int stackTokens(int col) {
-        int i = 5;
-        int value = 1;
-        while (i < this.nbCols && this.tab[col][i].getState().getNumber() != 0) {
+        int i = this.nbRows - 1;
+        while (i < this.nbRows && i > 0 && this.tab[col][i].getState().getNumber() != 0) {
             i--;
         }
-        System.out.println(i);
         return i;
     }
 
