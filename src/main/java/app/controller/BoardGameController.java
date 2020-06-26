@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 public class BoardGameController extends Stage {
     private static final int cols = 7;
     private static final int rows = 6;
+    
     private GameModel gameModel;
     private BoardGameView boardGameView;
     private GridController gridController;
