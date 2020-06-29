@@ -1,13 +1,9 @@
 package app.controller;
 
-import java.util.List;
-
-import app.controller.ScoreController;
-
 import app.model.GameModel;
 import app.model.GridModel;
-import app.model.enums.State;
 import app.model.Token;
+import app.model.enums.State;
 import app.view.GridView;
 import app.view.TokenView;
 import javafx.event.EventHandler;
@@ -18,6 +14,7 @@ public class GridController {
     private GridView gridView;
     private GameModel gameModel;
     private ScoreController scoreController;
+    private TokenView currentHoverTokenView;
 
     public GridController(int nbCols, int nbRows, GameModel gameModel, ScoreController scoreController) {
         this.gridModel = new GridModel(nbCols, nbRows);
@@ -26,6 +23,8 @@ public class GridController {
         this.gameModel = gameModel;
         
         this.setListeners();
+
+        this.currentHoverTokenView = null;
     }
 
     public GridModel getGridModel() {
@@ -54,15 +53,15 @@ public class GridController {
                 if (coordinates[0] != null && coordinates[1] != null) {
 
                     /* Calculate the height of the stack */
-                    int row = gridModel.stackTokens(coordinates[0]);
+                    int row = gridModel.getTokenStack(coordinates[0]);
 
-                    if (gridModel.getToken(coordinates[0], row).getState().getNumber() == 0) {
+                    if (gridModel.getToken(coordinates[0], row).getState() == State.FREE) {
                     
                         gridModel.getToken(coordinates[0], row).setState(gameModel.getCurrentPlayer());
                         /* Define the TokenView who need to change color in function of the stack */
                         TokenView newTokenView = gridView.getTokenView(coordinates[0], row);
                         /** Check if new token get you a winning line **/
-                        checkNewTokenRows(coordinates[0], row, gridModel.getToken(coordinates[0], row).getState().getNumber());
+                        checkNewTokenRows(coordinates[0], row, gridModel.getToken(coordinates[0], row).getState());
                         switch (gameModel.getCurrentPlayer()) {
                             case P1:
                                 newTokenView.setRed();
@@ -86,8 +85,16 @@ public class GridController {
         tokenView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (!tokenView.isAlreadyColored()) {
-                    tokenView.setHoverGrey();
+                Integer[] coordinates = gridView.getTokenViewCoordinates(tokenView);
+
+                if (coordinates[0] != null) {
+                    int row = gridModel.getTokenStack(coordinates[0]);
+                    
+                    System.out.println(coordinates[0]);
+                    System.out.println(row);
+
+                    currentHoverTokenView = gridView.getTokenView(coordinates[0], row);
+                    currentHoverTokenView.setHoverGrey();
                 }
             }
         });
@@ -96,22 +103,23 @@ public class GridController {
         tokenView.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (!tokenView.isAlreadyColored()) {
-                    tokenView.setGrey();
+                if (currentHoverTokenView != null && !currentHoverTokenView.isAlreadyColored()) {
+                    currentHoverTokenView.setGrey();
+                    currentHoverTokenView = null;
                 }
             }
         });
     }
 
     private void setListeners() {
-        List<TokenView> tokenViewList = gridView.getTokenViewList();
-        
-        for (TokenView tokenView : tokenViewList) {
-            setOnMouseHoverListeners(tokenView);
+        for (TokenView[] tokenViewSubList : gridView.getTokenViewList()) {
+            for (TokenView tokenView : tokenViewSubList) {
+                setOnMouseHoverListeners(tokenView);
+            }
         }
     }
 
-    public boolean parseGrid(int col, int row, int tokenType, int number, int direction_y, int direction_x) {
+    public boolean parseGrid(int col, int row, State tokenState, int number, int direction_y, int direction_x) {
 
         Token token;
         boolean rslt = false;
@@ -119,32 +127,32 @@ public class GridController {
             token = this.gridModel.getToken(col,row);
             if (number >= 5) {
                 rslt = true;
-            } else if (token.getState().getNumber() == tokenType) {
-                rslt = parseGrid(col + direction_y, row + direction_x, tokenType, number+1, direction_y, direction_x);
+            } else if (token.getState() == tokenState) {
+                rslt = parseGrid(col + direction_y, row + direction_x, tokenState, number+1, direction_y, direction_x);
             }
         }
         
         return rslt;
     }
 
-    public void checkNewTokenRows(int col, int row, int currentPlayer) {
+    public void checkNewTokenRows(int col, int row, State state) {
         boolean result = false;
         /* Check dans chaque direction */
-        result = parseGrid(col, row, currentPlayer, 1, 1, 0); /** Bas **/
+        result = parseGrid(col, row, state, 1, 1, 0); /** Bas **/
         if(!result)
-            result = parseGrid(col, row, currentPlayer, 1,-1, 0); /** Haut **/
+            result = parseGrid(col, row, state, 1,-1, 0); /** Haut **/
         if(!result)
-            result = parseGrid(col, row, currentPlayer, 1, 0, 1); /** Droite **/
+            result = parseGrid(col, row, state, 1, 0, 1); /** Droite **/
         if(!result)
-            result = parseGrid(col, row, currentPlayer, 1, 0, 1); /** Gauche **/
+            result = parseGrid(col, row, state, 1, 0, 1); /** Gauche **/
         if(!result)
-            result = parseGrid(col, row, currentPlayer, 1, 1, 1); /** Diag 1 **/
+            result = parseGrid(col, row, state, 1, 1, 1); /** Diag 1 **/
         if(!result)
-            result = parseGrid(col, row, currentPlayer, 1,-1, 1); /** Diag 2 **/
+            result = parseGrid(col, row, state, 1,-1, 1); /** Diag 2 **/
         if(!result)
-            result = parseGrid(col, row, currentPlayer, 1, 1,-1); /** Diag 3 **/
+            result = parseGrid(col, row, state, 1, 1,-1); /** Diag 3 **/
         if(!result)
-            result = parseGrid(col, row, currentPlayer, 0,-1,-1); /** Diag 4 **/
+            result = parseGrid(col, row, state, 0,-1,-1); /** Diag 4 **/
 
         if(result) {
             this.endGame();

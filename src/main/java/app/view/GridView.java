@@ -3,11 +3,8 @@ package app.view;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GridView extends GridPane {
-    private List<TokenView> tokenViewList;
+    private TokenView[][] tokenViewList;
 
     private int nbCols;
     private int nbRows;
@@ -31,7 +28,7 @@ public class GridView extends GridPane {
         super.setHgap(tokenGap);
         super.setAlignment(Pos.CENTER);
 
-        this.tokenViewList = new ArrayList<TokenView>();
+        this.tokenViewList = new TokenView[nbCols][nbRows];
         this.initTokenView();
         
     }
@@ -40,7 +37,7 @@ public class GridView extends GridPane {
         for (int i = 0; i < this.nbCols; i++) {
             for (int j = 0; j < this.nbRows; j++) {
                 TokenView tokenView = new TokenView(this.tokenRadius);
-                this.tokenViewList.add(tokenView);
+                this.tokenViewList[i][j] = tokenView;
                 this.add(tokenView, i, j);
             }
         }
@@ -55,16 +52,17 @@ public class GridView extends GridPane {
        return coordinates;
     }
 
-    public List<TokenView> getTokenViewList() {
+    public TokenView[][] getTokenViewList() {
         return this.tokenViewList;
     }
 
-    public TokenView getTokenView(int col, int row) {
-        TokenView tmp = null;
-        for (TokenView tokenView: this.tokenViewList) {
-            if(GridPane.getColumnIndex(tokenView) == col && GridPane.getRowIndex(tokenView) == row)
-                tmp = tokenView;
+    public TokenView getTokenView(int i, int j) {
+        TokenView tokenView = null;
+        
+        if (i >= 0 && i < this.nbCols && j >= 0 && j < this.nbRows) {
+            tokenView = tokenViewList[i][j];
         }
-        return tmp;
+
+        return tokenView;
     }
 }

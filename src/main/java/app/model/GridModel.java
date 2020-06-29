@@ -8,7 +8,6 @@ public class GridModel {
     private int nbRows;
 
     public GridModel(int nbCols, int nbRows) {
-
         this.nbCols = nbCols;
         this.nbRows = nbRows;
 
@@ -25,12 +24,12 @@ public class GridModel {
         }
     }
 
-    public int stackTokens(int col) {
-        int i = this.nbRows - 1;
-        while (i < this.nbRows && i > 0 && this.tab[col][i].getState().getNumber() != 0) {
-            i--;
+    public int getTokenStack(int i) {
+        int j = this.nbRows - 1;
+        while (j < this.nbRows && this.tab[i][j].getState() != State.FREE) {
+            j--;
         }
-        return i;
+        return j;
     }
 
     public Token getToken(int i, int j) {
