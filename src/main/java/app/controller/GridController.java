@@ -90,9 +90,6 @@ public class GridController {
                 if (coordinates[0] != null) {
                     int row = gridModel.getTokenStack(coordinates[0]);
                     
-                    System.out.println(coordinates[0]);
-                    System.out.println(row);
-
                     currentHoverTokenView = gridView.getTokenView(coordinates[0], row);
                     currentHoverTokenView.setHoverGrey();
                 }
