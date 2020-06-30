@@ -1,30 +1,41 @@
 package app.model;
 
-import app.model.enums.State;
+import java.util.Iterator;
+import java.util.Set;
 
 public class GameModel {
-    private State currentPlayer;
+    private Set<PlayerModel> playerSet;
+    private Iterator<PlayerModel> playerIterator;
+    private Token.Player currentPlayer;
+    private int nbCols;
+    private int nbRows;
 
-    private int cols = 7;
-    private int rows = 6;
+    public GameModel(Set<PlayerModel> playerSet, int nbCols, int nbRows) {
+        this.nbCols = nbCols;
+        this.nbRows = nbRows;
 
-    public GameModel() {
-        this.currentPlayer = State.P1;
+        this.playerSet = playerSet;
+        this.playerIterator = playerSet.iterator();
+
+        this.currentPlayer = ((PlayerModel) playerIterator.next()).getAttributedNumber();
     }
 
     public int getNbCols() {
-        return this.cols;
+        return this.nbCols;
     }
 
     public int getNbRows() {
-        return this.rows;
+        return this.nbRows;
     }
 
     public void nextPlayer() {
-        this.currentPlayer = (currentPlayer == State.P1) ? State.P2 : State.P1;
+        if (!this.playerIterator.hasNext()) {
+            this.playerIterator = playerSet.iterator();
+        }
+        currentPlayer = ((PlayerModel) playerIterator.next()).getAttributedNumber();
     }
 
-    public State getCurrentPlayer() {
+    public Token.Player getCurrentPlayer() {
         return this.currentPlayer;
     }
 }

@@ -1,6 +1,7 @@
 package app;
 
 import app.controller.BoardGameController;
+import app.model.GameModel;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

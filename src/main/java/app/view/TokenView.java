@@ -10,22 +10,18 @@ public class TokenView extends Circle {
     }
 
     public boolean isAlreadyColored() {
-        return (super.getFill() == Color.RED || super.getFill() == Color.YELLOW);
+        return (super.getFill() != Color.GREY && super.getFill() != Color.DARKGREY);
+    }
+    
+    public void setColor(Color color) {
+        super.setFill(color);
     }
 
-    public void setRed() {
-        super.setFill(Color.RED);
-    }
-
-    public void setYellow() {
-        super.setFill(Color.YELLOW);
-    }
-
-    public void setGrey() {
+    public void setNormalColor() {
         super.setFill(Color.GREY);
     }
 
-    public void setHoverGrey() {
+    public void setHoverColor() {
         super.setFill(Color.DARKGREY);
     }
 }
