@@ -1,4 +1,4 @@
-package app.view;
+package app.view.menu;
 
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
@@ -16,5 +16,13 @@ public class PlayerDetailsView extends BorderPane {
 
         super.setLeft(this.usernameTextField);
         super.setRight(this.colorPicker);
+    }
+
+    public TextField getTextField() {
+        return this.usernameTextField;
+    }
+
+    public ColorPicker getColorPicker() {
+        return this.colorPicker;
     }
 }

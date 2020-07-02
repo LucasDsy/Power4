@@ -6,7 +6,26 @@ public class Token {
 
     /** Class relative types */
     public enum Player {
-        NONE, P1, P2, P3, P4;
+        NONE(0),
+        P1(1),
+        P2(2),
+        P3(3),
+        P4(4);
+
+        private int number;
+
+        Player(int number) {
+            this.number = number;
+        }
+
+        @Override
+        public String toString() {
+            return "Player " + String.valueOf(this.number);
+        }
+
+        public int getNumber() {
+            return this.number;
+        }
     }
 
     public enum State {
