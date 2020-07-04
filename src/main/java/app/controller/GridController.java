@@ -1,8 +1,10 @@
 package app.controller;
 
 import app.model.Direction;
+import app.model.FileManager;
 import app.model.GameModel;
 import app.model.GridModel;
+import app.model.PlayerModel;
 import app.model.Token;
 import app.view.GridView;
 import app.view.TokenView;
@@ -34,7 +36,13 @@ public class GridController {
     }
 
     public void endGame() {
+        this.gameModel.getCurrentPlayer().increaseScore();
         this.gameModel.notifyObservers();
+        
+        for (PlayerModel playerModel : this.gameModel.getPlayers()) {
+            FileManager.getInstance().addScore(playerModel.getUsername(), playerModel.getScore());
+        }
+        
         this.gridModel.initTokens();
         this.gridView.initTokenView();
         this.setListeners();
@@ -58,7 +66,6 @@ public class GridController {
                     setPlayerColorForToken(actualTokenView);
 
                     if (gridModel.isWinning(currentPlayer, tokenCoordinates[0], tokenCoordinates[1], 0, Direction.NONE)) {
-                        gameModel.getCurrentPlayer().increaseScore();
                         endGame();
                     }
 
