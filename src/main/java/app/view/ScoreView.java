@@ -1,23 +1,30 @@
 package app.view;
 
-import javafx.scene.layout.BorderPane;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ScoreView extends BorderPane {
-    private ScorePane scoreP1;
-    private ScorePane scoreP2;
+import javafx.scene.layout.HBox;
 
-    public ScoreView() {
+public class ScoreView extends HBox {
+    private List<ScorePane> scoreList;
+
+    public ScoreView(List<String> usernameList) {
         super();
 
-        this.scoreP1 = new ScorePane(1);
-        this.scoreP2 = new ScorePane(2);
+        this.scoreList = new ArrayList<>();
 
-        super.setLeft(this.scoreP1);
-        super.setRight(this.scoreP2);
+        for (String username : usernameList) {
+            ScorePane scorePane = new ScorePane(username);
+            this.scoreList.add(scorePane);
+            super.getChildren().add(scorePane);
+        }
     }
 
-    public void refreshScores(int score1, int score2) {
-        this.scoreP1.setScore(score1);
-        this.scoreP2.setScore(score2);
+    public void refreshScore(String username, int score) {
+        for (ScorePane scorePane : scoreList) {
+            if (scorePane.getUsername().equals(username)) {
+                scorePane.update(score);
+            }
+        }
     }
 }

@@ -9,28 +9,40 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 public class ScorePane extends Pane {
-    private int playerNumber;
-    private Text score;
+    private String username;
+    private int score;
+    private Text displayText;
     
-    public ScorePane(int playerNumber) {
+    public ScorePane(String username) {
         super();
 
-        this.playerNumber = playerNumber;
-        this.score = new Text("P" + String.valueOf(this.playerNumber) + " SCORE: 0");
-        
+        this.displayText = new Text();
+        this.username = username;
+        this.score = 0;
+
+        this.updateDisplay();
         this.setStyle();
 
-        super.getChildren().add(score);
+        super.getChildren().add(displayText);
     }
 
-    public void setScore(int score) {
-        this.score.setText("P" + String.valueOf(this.playerNumber) + " SCORE: " + String.valueOf(score));
+    public void update(int score) {
+        this.score = score;
+        this.updateDisplay();
+    }
+
+    private void updateDisplay() {
+        this.displayText.setText(username + " : " + String.valueOf(this.score));
     }
 
     private void setStyle() {
-        this.score.setFill(Color.WHITE);
-        this.score.setFont(Font.font("Helvetica", FontWeight.BOLD, FontPosture.REGULAR, 24));
+        this.displayText.setFill(Color.WHITE);
+        this.displayText.setFont(Font.font("Helvetica", FontWeight.BOLD, FontPosture.REGULAR, 24));
 
-        this.score.setTextAlignment(TextAlignment.CENTER);
+        this.displayText.setTextAlignment(TextAlignment.CENTER);
+    }
+
+    public String getUsername() {
+        return this.username;
     }
 }

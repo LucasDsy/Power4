@@ -1,9 +1,15 @@
 package app.model;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
-public class GameModel {
+import app.Observable;
+import app.Observer;
+
+public class GameModel implements Observable {
+    private List<Observer> observers;
     private Set<PlayerModel> playerSet;
     private Iterator<PlayerModel> playerIterator;
     private PlayerModel currentPlayer;
@@ -18,6 +24,8 @@ public class GameModel {
         this.playerIterator = playerSet.iterator();
 
         currentPlayer = this.playerIterator.next();
+
+        this.observers = new ArrayList<>();
     }
 
     public int getNbCols() {
@@ -38,5 +46,26 @@ public class GameModel {
 
     public PlayerModel getCurrentPlayer() {
         return this.currentPlayer;
+    }
+
+    public Set<PlayerModel> getPlayers() {
+        return this.playerSet;
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        this.observers.add(o);
+    }
+
+    @Override
+    public void deleteObserver(Observer o) {
+        this.observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer o : this.observers) {
+            o.update();
+        }
     }
 }

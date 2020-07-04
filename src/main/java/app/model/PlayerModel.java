@@ -21,6 +21,19 @@ public class PlayerModel {
         this.score++;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        boolean equals = false;
+
+        if (obj instanceof PlayerModel) {
+            PlayerModel playerModel = (PlayerModel) obj;
+
+            equals = playerModel.username.equals(this.username) && playerModel.color.equals(this.color);
+        }
+
+        return equals;
+    }
+
     /** Accessors */
     public String getUsername() {
         return username;
@@ -32,10 +45,6 @@ public class PlayerModel {
 
     public int getScore() {
         return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public Color getColor() {
