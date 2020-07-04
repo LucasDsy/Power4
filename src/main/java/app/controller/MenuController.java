@@ -49,7 +49,7 @@ public class MenuController extends Stage {
                         Player player = Player.NONE;
 
                         for (Player tmp : Player.values()) {
-                            if (tmp.getNumber() == i) {
+                            if (tmp.getNumber() == i+1) {
                                 player = tmp;
                             }
                         }

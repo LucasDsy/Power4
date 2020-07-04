@@ -1,5 +1,6 @@
 package app.controller;
 
+import app.model.Direction;
 import app.model.GameModel;
 import app.model.GridModel;
 import app.model.Token;
@@ -35,7 +36,7 @@ public class GridController {
     public void endGame() {
         System.out.println("Fin de la partie!");
         // this.scoreModel.updateScore();
-        this.gridModel.initToken();
+        this.gridModel.initTokens();
         this.gridView.initTokenView();
         this.setListeners();
     }
@@ -46,18 +47,23 @@ public class GridController {
             @Override
             public void handle(MouseEvent event) {
                 Integer[] tokenCoordinates = gridView.getTokenViewCoordinates(tokenView);
-                Token.Player currentPlayer = gameModel.getCurrentPlayer();
-
-                setPlayerColorForToken(tokenView);
 
                 if (tokenCoordinates[0] != null && tokenCoordinates[1] != null) {
-                    
-                    if (gridModel.isWinning(currentPlayer, tokenCoordinates[0], tokenCoordinates[1], 0)) {
+                    tokenCoordinates[1] = gridModel.getTokenStack(tokenCoordinates[0]);
+
+                    Token.Player currentPlayer = gameModel.getCurrentPlayer().getAttributedNumber();
+                    System.out.println(gameModel.getCurrentPlayer().getAttributedNumber());
+                    gridModel.setToken(tokenCoordinates[0], tokenCoordinates[1], currentPlayer);
+
+                    TokenView actualTokenView = gridView.getTokenView(tokenCoordinates[0], tokenCoordinates[1]);
+                    setPlayerColorForToken(actualTokenView);
+
+                    if (gridModel.isWinning(currentPlayer, tokenCoordinates[0], tokenCoordinates[1], 0, Direction.NONE)) {
                         endGame();
                     }
+
+                    gameModel.nextPlayer();
                 }
-    
-                gameModel.nextPlayer();
             }
         });
 
@@ -97,25 +103,6 @@ public class GridController {
     }
 
     private void setPlayerColorForToken(TokenView tokenView) {
-        switch (this.gameModel.getCurrentPlayer()) {
-            case P1:
-                
-                break;
-
-            case P2:
-                
-                break;
-
-            case P3:
-                
-                break;
-
-            case P4:
-                
-                break;
-
-            case NONE:
-                break;
-        }
+        tokenView.setColor(gameModel.getCurrentPlayer().getColor());
     }
 }

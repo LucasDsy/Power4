@@ -1,5 +1,8 @@
 package app.model;
 
+import app.model.Token.Player;
+import app.model.Token.State;
+
 public class GridModel {
     private Token[][] tab;
     private int nbCols;
@@ -11,15 +14,20 @@ public class GridModel {
 
         this.tab = new Token[this.nbCols][this.nbRows];
 
-        this.initToken();
+        this.initTokens();
     }
 
-    public void initToken() {
+    public void initTokens() {
         for (int i = 0; i < this.nbCols; i++) {
             for (int j = 0; j < this.nbRows; j++) {
                 this.tab[i][j] = new Token();
             }
         }
+    }
+
+    public void setToken(int i, int j, Player player) {
+        tab[i][j].state = State.TAKEN;
+        tab[i][j].player = player;
     }
 
     public int getTokenStack(int i) {
@@ -42,59 +50,59 @@ public class GridModel {
         return this.nbCols;
     }
 
-    public boolean isWinning(Token.Player playerToCheck, int i, int j, int counter) {
-        boolean isWinning = (counter <= 4);
+    public boolean isWinning(Token.Player playerToCheck, int i, int j, int counter, Direction direction) {
+        boolean isWinning = (counter >= 4);
 
         if (!isWinning && i >= 0 && i < this.tab.length && j >= 0 && j < this.tab[i].length) {
-            Token currentToken = this.tab[i][j];
             
-            if (currentToken.state == Token.State.TAKEN && currentToken.player == playerToCheck) {
-                counter++;
-            }
+            if (tab[i][j].state == State.TAKEN && tab[i][j].player == playerToCheck) {
+                
+                switch(direction) {
+                    case UP:
+                        isWinning = isWinning(playerToCheck, i, j+1, counter+1, Direction.UP);
+                        break;
 
-            isWinning = isWinning(playerToCheck, i+1, j, counter);
+                    case DOWN:
+                        isWinning = isWinning(playerToCheck, i, j-1, counter+1, Direction.DOWN);
+                        break;
+
+                    case LEFT:
+                        isWinning = isWinning(playerToCheck, i-1, j, counter+1, Direction.LEFT);
+                        break;
+
+                    case RIGHT:
+                        isWinning = isWinning(playerToCheck, i+1, j, counter+1, Direction.RIGHT);
+                        break;
+
+                    case UPLEFT:
+                        isWinning = isWinning(playerToCheck, i-1, j+1, counter+1, Direction.UPLEFT);
+                        break;
+
+                    case UPRIGHT:
+                        isWinning = isWinning(playerToCheck, i+1, j+1, counter+1, Direction.UPRIGHT);
+                        break;
+
+                    case DOWNLEFT:
+                        isWinning = isWinning(playerToCheck, i-1, j-1, counter+1, Direction.DOWNLEFT);
+                        break;
+
+                    case DOWNRIGHT:
+                        isWinning = isWinning(playerToCheck, i+1, j-1, counter+1, Direction.DOWNRIGHT);
+                        break;
+                    
+                    case NONE: // première itération : on lance une récursivité dans chaque direction
+                        isWinning = isWinning(playerToCheck, i, j, counter, Direction.UP) ||
+                                    isWinning(playerToCheck, i, j, counter, Direction.DOWN) ||
+                                    isWinning(playerToCheck, i, j, counter, Direction.LEFT) ||
+                                    isWinning(playerToCheck, i, j, counter, Direction.RIGHT) ||
+                                    isWinning(playerToCheck, i, j, counter, Direction.UPLEFT) ||
+                                    isWinning(playerToCheck, i, j, counter, Direction.UPRIGHT) ||
+                                    isWinning(playerToCheck, i, j, counter, Direction.DOWNLEFT) ||
+                                    isWinning(playerToCheck, i, j, counter, Direction.DOWNRIGHT);
+                }
+            }
         }
 
         return isWinning;
-    }
-
-    public boolean parseGrid(int col, int row, Token.State tokenState, int number, int direction_y, int direction_x) {
-        Token token;
-        boolean rslt = false;
-
-        if (row < this.nbRows && col < this.nbCols && row >= 0 && col >= 0) {
-            token = this.getToken(col,row);
-            if (number >= 5) {
-                rslt = true;
-            } else if (token.getState() == tokenState) {
-                rslt = parseGrid(col + direction_y, row + direction_x, tokenState, number+1, direction_y, direction_x);
-            }
-        }
-        
-        return rslt;
-    }
-
-    public void checkNewTokenRows(int col, int row, Token.State state) {
-        boolean result = false;
-        /* Check dans chaque direction */
-        result = parseGrid(col, row, state, 1, 1, 0); /** Bas **/
-        if(!result)
-            result = parseGrid(col, row, state, 1,-1, 0); /** Haut **/
-        if(!result)
-            result = parseGrid(col, row, state, 1, 0, 1); /** Droite **/
-        if(!result)
-            result = parseGrid(col, row, state, 1, 0, 1); /** Gauche **/
-        if(!result)
-            result = parseGrid(col, row, state, 1, 1, 1); /** Diag 1 **/
-        if(!result)
-            result = parseGrid(col, row, state, 1,-1, 1); /** Diag 2 **/
-        if(!result)
-            result = parseGrid(col, row, state, 1, 1,-1); /** Diag 3 **/
-        if(!result)
-            result = parseGrid(col, row, state, 0,-1,-1); /** Diag 4 **/
-
-        if(result) {
-            // this.endGame();
-        }
     }
 }

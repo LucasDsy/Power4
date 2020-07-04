@@ -6,7 +6,7 @@ import java.util.Set;
 public class GameModel {
     private Set<PlayerModel> playerSet;
     private Iterator<PlayerModel> playerIterator;
-    private Token.Player currentPlayer;
+    private PlayerModel currentPlayer;
     private int nbCols;
     private int nbRows;
 
@@ -17,7 +17,7 @@ public class GameModel {
         this.playerSet = playerSet;
         this.playerIterator = playerSet.iterator();
 
-        this.currentPlayer = ((PlayerModel) playerIterator.next()).getAttributedNumber();
+        currentPlayer = this.playerIterator.next();
     }
 
     public int getNbCols() {
@@ -32,10 +32,11 @@ public class GameModel {
         if (!this.playerIterator.hasNext()) {
             this.playerIterator = playerSet.iterator();
         }
-        currentPlayer = ((PlayerModel) playerIterator.next()).getAttributedNumber();
+
+        currentPlayer = playerIterator.next();
     }
 
-    public Token.Player getCurrentPlayer() {
+    public PlayerModel getCurrentPlayer() {
         return this.currentPlayer;
     }
 }

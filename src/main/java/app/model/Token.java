@@ -35,7 +35,7 @@ public class Token {
     /** Constructor */
     public Token() {
         state = State.FREE;
-        player = null;
+        player = Player.NONE;
     }
 
     /** Accessors */
