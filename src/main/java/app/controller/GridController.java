@@ -1,7 +1,5 @@
 package app.controller;
 
-import java.util.Observable;
-
 import app.model.Direction;
 import app.model.GameModel;
 import app.model.GridModel;
@@ -60,7 +58,7 @@ public class GridController {
                     setPlayerColorForToken(actualTokenView);
 
                     if (gridModel.isWinning(currentPlayer, tokenCoordinates[0], tokenCoordinates[1], 0, Direction.NONE)) {
-                        gameModel.getCurrentPlayer().increaseScore();;
+                        gameModel.getCurrentPlayer().increaseScore();
                         endGame();
                     }
 

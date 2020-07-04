@@ -16,7 +16,7 @@ public class BoardGameController extends Stage {
         scoreController = new ScoreController(gameModel);
         gridController = new GridController(gameModel);
 
-        this.boardGameView = new BoardGameView(gridController.getGridView(),scoreController.getScoreView());
+        this.boardGameView = new BoardGameView(gridController.getGridView(), scoreController.getScoreView());
 
         super.setScene(new Scene(boardGameView));
 
