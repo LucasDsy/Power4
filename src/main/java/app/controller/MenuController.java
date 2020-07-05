@@ -20,10 +20,15 @@ public class MenuController extends Stage {
     private MenuView menuView;
 
     public MenuController() {
+        super();
+        
         this.menuView = new MenuView();
 
         this.setListeners();
+        
         super.setScene(new Scene(menuView));
+        super.setTitle("Puissance 4 - Menu");
+        super.setResizable(false);
     }
 
     private void setListeners() {

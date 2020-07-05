@@ -105,4 +105,21 @@ public class GridModel {
 
         return isWinning;
     }
+
+    public boolean isFull() {
+        int i = 0, j = 0;
+        boolean isFull = true;
+
+        while (i < tab.length && isFull) {
+            
+            while (j < tab[i].length && isFull) {
+                isFull = (tab[i][j].state == State.TAKEN);
+                j++;
+            }
+
+            i++;
+        }
+
+        return isFull;
+    }
 }

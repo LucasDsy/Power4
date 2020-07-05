@@ -40,7 +40,8 @@ public class GridController {
         this.gameModel.notifyObservers();
         
         for (PlayerModel playerModel : this.gameModel.getPlayers()) {
-            FileManager.getInstance().addScore(playerModel.getUsername(), playerModel.getScore());
+            if (playerModel.getScore() > 0)
+                FileManager.getInstance().addScore(playerModel.getUsername(), playerModel.getScore());
         }
         
         this.gridModel.initTokens();
@@ -65,7 +66,7 @@ public class GridController {
                     TokenView actualTokenView = gridView.getTokenView(tokenCoordinates[0], tokenCoordinates[1]);
                     setPlayerColorForToken(actualTokenView);
 
-                    if (gridModel.isWinning(currentPlayer, tokenCoordinates[0], tokenCoordinates[1], 0, Direction.NONE)) {
+                    if (gridModel.isWinning(currentPlayer, tokenCoordinates[0], tokenCoordinates[1], 0, Direction.NONE) || gridModel.isFull()) {
                         endGame();
                     }
 

@@ -21,8 +21,8 @@ public class SizeChooserView extends VBox {
         this.colLabel = new Label("Taille horizontale : ");
         this.rowLabel = new Label("Taille verticale : ");
 
-        this.colChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(7, 8, 9, 10, 11));
-        this.rowChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(6, 7));
+        this.colChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(7, 8, 9, 10));
+        this.rowChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(6));
         this.colChoiceBox.setValue(7);
         this.rowChoiceBox.setValue(6);
 
