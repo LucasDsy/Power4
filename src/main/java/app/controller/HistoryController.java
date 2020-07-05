@@ -15,7 +15,7 @@ public class HistoryController implements Observer {
         
         ObservableList<Score> scoreList = FXCollections.observableArrayList(FileManager.getInstance().getScoreList());
 
-        this.historyView = new HistoryView(scoreList);
+        historyView = new HistoryView(scoreList);
 
         FileManager.getInstance().addObserver(this);
     }

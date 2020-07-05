@@ -20,11 +20,11 @@ public class Token {
 
         @Override
         public String toString() {
-            return "Player " + String.valueOf(this.number);
+            return "Player " + String.valueOf(number);
         }
 
         public int getNumber() {
-            return this.number;
+            return number;
         }
     }
 
@@ -44,7 +44,7 @@ public class Token {
     }
 
     public State getState() {
-        return this.state;
+        return state;
     }
 
     public void setPlayer(Player player) {
@@ -52,6 +52,6 @@ public class Token {
     }
 
     public State getPlayer() {
-        return this.state;
+        return state;
     }
 }

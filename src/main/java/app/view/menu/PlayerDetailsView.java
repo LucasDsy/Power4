@@ -11,18 +11,18 @@ public class PlayerDetailsView extends BorderPane {
     public PlayerDetailsView() {
         super();
 
-        this.usernameTextField = new TextField();
-        this.colorPicker = new ColorPicker();
+        usernameTextField = new TextField();
+        colorPicker = new ColorPicker();
 
-        super.setLeft(this.usernameTextField);
-        super.setRight(this.colorPicker);
+        super.setLeft(usernameTextField);
+        super.setRight(colorPicker);
     }
 
     public TextField getTextField() {
-        return this.usernameTextField;
+        return usernameTextField;
     }
 
     public ColorPicker getColorPicker() {
-        return this.colorPicker;
+        return colorPicker;
     }
 }

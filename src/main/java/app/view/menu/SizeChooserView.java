@@ -15,21 +15,21 @@ public class SizeChooserView extends VBox {
     private ChoiceBox<Integer> rowChoiceBox;
 
     public SizeChooserView() {
-        this.colBox = new HBox();
-        this.rowBox = new HBox();
+        colBox = new HBox();
+        rowBox = new HBox();
 
-        this.colLabel = new Label("Taille horizontale : ");
-        this.rowLabel = new Label("Taille verticale : ");
+        colLabel = new Label("Taille horizontale : ");
+        rowLabel = new Label("Taille verticale : ");
 
-        this.colChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(7, 8, 9, 10));
-        this.rowChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(6));
-        this.colChoiceBox.setValue(7);
-        this.rowChoiceBox.setValue(6);
+        colChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(7, 8, 9, 10));
+        rowChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(6));
+        colChoiceBox.setValue(7);
+        rowChoiceBox.setValue(6);
 
-        this.colBox.getChildren().addAll(colLabel, colChoiceBox);
-        this.rowBox.getChildren().addAll(rowLabel, rowChoiceBox);
+        colBox.getChildren().addAll(colLabel, colChoiceBox);
+        rowBox.getChildren().addAll(rowLabel, rowChoiceBox);
 
-        super.getChildren().addAll(this.colBox, this.rowBox);
+        super.getChildren().addAll(colBox, rowBox);
     }
 
     public ChoiceBox<Integer> getColChoiceBox() {

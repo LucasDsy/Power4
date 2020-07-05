@@ -23,34 +23,34 @@ public class ScoreView extends BorderPane {
     public ScoreView(List<String> usernameList) {
         super();
 
-        this.title = new Text("Nombre de victoires");
+        title = new Text("Nombre de victoires");
 
-        this.leftScoresDisplay = new VBox();
-        this.rightScoresDisplay = new VBox();
+        leftScoresDisplay = new VBox();
+        rightScoresDisplay = new VBox();
 
-        this.scoreTextList = new ArrayList<>();
+        scoreTextList = new ArrayList<>();
 
         int i = 0;
         
         while (i < usernameList.size()) {
             ScoreText scoreText = new ScoreText(usernameList.get(i));
 
-            this.scoreTextList.add(scoreText);
+            scoreTextList.add(scoreText);
 
             if (i % 2 == 0) {
-                this.leftScoresDisplay.getChildren().add(scoreText);
+                leftScoresDisplay.getChildren().add(scoreText);
             } else {
-                this.rightScoresDisplay.getChildren().add(scoreText);
+                rightScoresDisplay.getChildren().add(scoreText);
             }
 
             i++;
         }
 
-        super.setTop(this.title);
-        super.setLeft(this.leftScoresDisplay);
-        super.setRight(this.rightScoresDisplay);
+        super.setTop(title);
+        super.setLeft(leftScoresDisplay);
+        super.setRight(rightScoresDisplay);
 
-        this.setStyle();
+        setStyle();
     }
 
     public void refreshScore(String username, int score) {
@@ -62,20 +62,20 @@ public class ScoreView extends BorderPane {
     }
 
     private void setStyle() {
-        this.title.setFill(Color.WHITE);
-        this.title.setFont(Font.font("Helvetica", FontWeight.BOLD, FontPosture.REGULAR, 24));
+        title.setFill(Color.WHITE);
+        title.setFont(Font.font("Helvetica", FontWeight.BOLD, FontPosture.REGULAR, 24));
 
-        this.leftScoresDisplay.setSpacing(20);
-        this.rightScoresDisplay.setSpacing(20);
+        leftScoresDisplay.setSpacing(20);
+        rightScoresDisplay.setSpacing(20);
 
-        for (Node child : this.leftScoresDisplay.getChildren())
+        for (Node child : leftScoresDisplay.getChildren())
             VBox.setMargin(child, new Insets(0, 0, 0, 20));
 
-        for (Node child : this.rightScoresDisplay.getChildren())
+        for (Node child : rightScoresDisplay.getChildren())
             VBox.setMargin(child, new Insets(0, 20, 0, 0));
 
-        super.setAlignment(this.title, Pos.BASELINE_CENTER);
-        super.setAlignment(this.leftScoresDisplay, Pos.BASELINE_RIGHT);
-        super.setAlignment(this.rightScoresDisplay, Pos.BASELINE_LEFT);
+        super.setAlignment(title, Pos.BASELINE_CENTER);
+        super.setAlignment(leftScoresDisplay, Pos.BASELINE_RIGHT);
+        super.setAlignment(rightScoresDisplay, Pos.BASELINE_LEFT);
     }
 }

@@ -21,18 +21,18 @@ public class FileManager implements Observable {
     private List<Observer> observers;
 
     private FileManager() {
-        this.scoreList = new ArrayList<>();
-        this.observers = new ArrayList<>();
+        scoreList = new ArrayList<>();
+        observers = new ArrayList<>();
 
         try {
-            this.file = new File(FILEPATH);
-            this.file.createNewFile();
+            file = new File(FILEPATH);
+            file.createNewFile();
 
         } catch (Exception exception) {
             exception.printStackTrace();
         }
 
-        this.readInList();
+        readInList();
     }
 
     public static FileManager getInstance() {
@@ -88,7 +88,7 @@ public class FileManager implements Observable {
 
     public List<Score> getScoreList() {
         sortScoreList();
-        return this.scoreList;
+        return scoreList;
     }
 
     private void writeFromList() {
@@ -114,7 +114,7 @@ public class FileManager implements Observable {
 
             while ((line = bufferedReader.readLine()) != null) {
                 String[] components = line.split(" ");
-                this.scoreList.add(new Score(components[0], components[1]));
+                scoreList.add(new Score(components[0], components[1]));
             }
 
             bufferedReader.close();
@@ -128,7 +128,7 @@ public class FileManager implements Observable {
      * Trie la liste de scores en fonction du score par décroissance
      */
     private void sortScoreList() {
-        this.scoreList.sort(new Comparator<Score>() {
+        scoreList.sort(new Comparator<Score>() {
             @Override
             public int compare(Score o1, Score o2) {
                 return o2.compareTo(o1);
@@ -138,17 +138,17 @@ public class FileManager implements Observable {
 
     @Override
     public void addObserver(Observer o) {
-        this.observers.add(o);
+        observers.add(o);
     }
 
     @Override
     public void deleteObserver(Observer o) {
-        this.observers.remove(o);
+        observers.remove(o);
     }
 
     @Override
     public void notifyObservers() {
-        for (Observer o : this.observers) {
+        for (Observer o : observers) {
             o.update();
         }
     }

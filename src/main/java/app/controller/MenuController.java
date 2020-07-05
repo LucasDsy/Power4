@@ -22,9 +22,9 @@ public class MenuController extends Stage {
     public MenuController() {
         super();
         
-        this.menuView = new MenuView();
+        menuView = new MenuView();
 
-        this.setListeners();
+        setListeners();
         
         super.setScene(new Scene(menuView));
         super.setTitle("Puissance 4 - Menu");
@@ -32,14 +32,14 @@ public class MenuController extends Stage {
     }
 
     private void setListeners() {
-        this.menuView.getPlayerNumberView().getPlayerNumberChoiceBox().setOnAction(new EventHandler<ActionEvent>() {
+        menuView.getPlayerNumberView().getPlayerNumberChoiceBox().setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
                 menuView.updatePlayerDetailsViews();
 			}
         });
 
-        this.menuView.getPlayButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+        menuView.getPlayButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 
@@ -84,8 +84,8 @@ public class MenuController extends Stage {
         Set<Color> colorSet = new HashSet<>();
         Set<String> usernameSet = new HashSet<>();
                 
-        while (i < this.menuView.getPlayerNumberView().getPlayerNumber() && bool) {
-            PlayerDetailsView playerDetailsView = this.menuView.getPlayerDetailsView(i);
+        while (i < menuView.getPlayerNumberView().getPlayerNumber() && bool) {
+            PlayerDetailsView playerDetailsView = menuView.getPlayerDetailsView(i);
 
             bool = playerDetailsView != null && playerDetailsView.getTextField().getText() != "";
 

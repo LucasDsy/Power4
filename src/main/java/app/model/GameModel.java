@@ -21,50 +21,50 @@ public class GameModel implements Observable {
         this.nbRows = nbRows;
 
         this.playerSet = playerSet;
-        this.playerIterator = playerSet.iterator();
+        playerIterator = playerSet.iterator();
 
-        currentPlayer = this.playerIterator.next();
+        currentPlayer = playerIterator.next();
 
-        this.observers = new ArrayList<>();
+        observers = new ArrayList<>();
     }
 
     public int getNbCols() {
-        return this.nbCols;
+        return nbCols;
     }
 
     public int getNbRows() {
-        return this.nbRows;
+        return nbRows;
     }
 
     public void nextPlayer() {
-        if (!this.playerIterator.hasNext()) {
-            this.playerIterator = playerSet.iterator();
+        if (!playerIterator.hasNext()) {
+            playerIterator = playerSet.iterator();
         }
 
         currentPlayer = playerIterator.next();
     }
 
     public PlayerModel getCurrentPlayer() {
-        return this.currentPlayer;
+        return currentPlayer;
     }
 
     public Set<PlayerModel> getPlayers() {
-        return this.playerSet;
+        return playerSet;
     }
 
     @Override
     public void addObserver(Observer o) {
-        this.observers.add(o);
+        observers.add(o);
     }
 
     @Override
     public void deleteObserver(Observer o) {
-        this.observers.remove(o);
+        observers.remove(o);
     }
 
     @Override
     public void notifyObservers() {
-        for (Observer o : this.observers) {
+        for (Observer o : observers) {
             o.update();
         }
     }

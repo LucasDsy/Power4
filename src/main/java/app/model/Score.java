@@ -10,23 +10,23 @@ public class Score implements Comparable<Score> {
     private IntegerProperty score;
 
     public Score(String username, int score) {
-        this.setUsername(username);
-        this.setScore(score);
+        setUsername(username);
+        setScore(score);
     }
 
     public Score(String username, String score) {
-        this.setUsername(username);
-        this.setScore(Integer.valueOf(score));
+        setUsername(username);
+        setScore(Integer.valueOf(score));
     }
 
     public StringProperty usernameProperty() {
-        if (this.username == null) this.username = new SimpleStringProperty(this, "username");
-        return this.username;
+        if (username == null) username = new SimpleStringProperty(this, "username");
+        return username;
     }
 
     public IntegerProperty scoreProperty() {
-        if (this.score == null) this.score = new SimpleIntegerProperty(this, "score");
-        return this.score;
+        if (score == null) score = new SimpleIntegerProperty(this, "score");
+        return score;
     }
 
     public void setUsername(String value) {
@@ -47,6 +47,6 @@ public class Score implements Comparable<Score> {
 
     @Override
     public int compareTo(Score o) {
-        return this.getScore().compareTo(o.getScore());
+        return getScore().compareTo(o.getScore());
     }
 }

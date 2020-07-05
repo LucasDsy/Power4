@@ -21,17 +21,17 @@ public class ScoreController implements Observer {
             usernameList.add(playerModel.getUsername());
         }
 
-        this.scoreView = new ScoreView(usernameList);
+        scoreView = new ScoreView(usernameList);
     }
 
     public ScoreView getScoreView() {
-        return this.scoreView;
+        return scoreView;
     }
 
     @Override
     public void update() {
-        for (PlayerModel playerModel : this.gameModel.getPlayers()) {
-            this.scoreView.refreshScore(playerModel.getUsername(), playerModel.getScore());
+        for (PlayerModel playerModel : gameModel.getPlayers()) {
+            scoreView.refreshScore(playerModel.getUsername(), playerModel.getScore());
         }
     }
 }

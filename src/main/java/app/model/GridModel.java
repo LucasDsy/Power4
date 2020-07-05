@@ -4,7 +4,7 @@ import app.model.Token.Player;
 import app.model.Token.State;
 
 public class GridModel {
-    private Token[][] tab;
+    private Token[][] matrix;
     private int nbCols;
     private int nbRows;
 
@@ -12,50 +12,50 @@ public class GridModel {
         this.nbCols = nbCols;
         this.nbRows = nbRows;
 
-        this.tab = new Token[this.nbCols][this.nbRows];
+        matrix = new Token[nbCols][nbRows];
 
-        this.initTokens();
+        initTokens();
     }
 
     public void initTokens() {
-        for (int i = 0; i < this.nbCols; i++) {
-            for (int j = 0; j < this.nbRows; j++) {
-                this.tab[i][j] = new Token();
+        for (int i = 0; i < nbCols; i++) {
+            for (int j = 0; j < nbRows; j++) {
+                matrix[i][j] = new Token();
             }
         }
     }
 
     public void setToken(int i, int j, Player player) {
-        tab[i][j].state = State.TAKEN;
-        tab[i][j].player = player;
+        matrix[i][j].state = State.TAKEN;
+        matrix[i][j].player = player;
     }
 
     public int getTokenStack(int i) {
-        int j = this.nbRows - 1;
-        while (j < this.nbRows && this.tab[i][j].getState() == Token.State.TAKEN) {
+        int j = nbRows - 1;
+        while (j < nbRows && matrix[i][j].getState() == Token.State.TAKEN) {
             j--;
         }
         return j;
     }
 
     public Token getToken(int i, int j) {
-        return this.tab[i][j];
+        return matrix[i][j];
     }
 
     public int getNbRows() {
-        return this.nbRows;
+        return nbRows;
     }
 
     public int getNbCols() {
-        return this.nbCols;
+        return nbCols;
     }
 
     public boolean isWinning(Token.Player playerToCheck, int i, int j, int counter, Direction direction) {
         boolean isWinning = (counter >= 4);
 
-        if (!isWinning && i >= 0 && i < this.tab.length && j >= 0 && j < this.tab[i].length) {
+        if (!isWinning && i >= 0 && i < matrix.length && j >= 0 && j < matrix[i].length) {
             
-            if (tab[i][j].state == State.TAKEN && tab[i][j].player == playerToCheck) {
+            if (matrix[i][j].state == State.TAKEN && matrix[i][j].player == playerToCheck) {
                 
                 switch(direction) {
                     case UP:
@@ -110,10 +110,10 @@ public class GridModel {
         int i = 0, j = 0;
         boolean isFull = true;
 
-        while (i < tab.length && isFull) {
+        while (i < matrix.length && isFull) {
             
-            while (j < tab[i].length && isFull) {
-                isFull = (tab[i][j].state == State.TAKEN);
+            while (j < matrix[i].length && isFull) {
+                isFull = (matrix[i][j].state == State.TAKEN);
                 j++;
             }
 

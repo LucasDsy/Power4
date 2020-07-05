@@ -21,7 +21,7 @@ public class BoardGameController extends Stage {
         gridController = new GridController(gameModel);
         historyController = new HistoryController();
 
-        this.boardGameView = new BoardGameView(gridController.getGridView(), scoreController.getScoreView(), historyController.getHistoryView());
+        boardGameView = new BoardGameView(gridController.getGridView(), scoreController.getScoreView(), historyController.getHistoryView());
 
         setBackButtonViewListeners();
 

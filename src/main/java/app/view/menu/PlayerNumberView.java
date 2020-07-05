@@ -12,20 +12,20 @@ public class PlayerNumberView extends HBox {
     public PlayerNumberView() {
         super();
 
-        this.playerNumberLabel = new Label("Combien de joueurs vont jouer ?");
+        playerNumberLabel = new Label("Combien de joueurs vont jouer ?");
 
-        this.playerNumberChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(2,3,4));
-        this.playerNumberChoiceBox.setValue(2);
+        playerNumberChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(2,3,4));
+        playerNumberChoiceBox.setValue(2);
 
         super.setSpacing(10);
-        super.getChildren().addAll(this.playerNumberLabel, this.playerNumberChoiceBox);
+        super.getChildren().addAll(playerNumberLabel, playerNumberChoiceBox);
     }
 
     public int getPlayerNumber() {
-        return (int) this.playerNumberChoiceBox.getValue();
+        return (int) playerNumberChoiceBox.getValue();
     }
 
     public ChoiceBox<Integer> getPlayerNumberChoiceBox() {
-        return this.playerNumberChoiceBox;
+        return playerNumberChoiceBox;
     }
 }

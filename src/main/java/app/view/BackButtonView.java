@@ -15,7 +15,7 @@ public class BackButtonView extends Button {
     
     public BackButtonView() {
         super("Menu");
-        this.setStyle();
+        setStyle();
     }
 
     public void setNormalColor() {

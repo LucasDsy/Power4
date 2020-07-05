@@ -18,35 +18,35 @@ public class GridController {
     private TokenView currentHoverTokenView;
 
     public GridController(GameModel gameModel) {
-        this.gridModel = new GridModel(gameModel.getNbCols(), gameModel.getNbRows());
-        this.gridView = new GridView(gameModel.getNbCols(), gameModel.getNbRows());
+        gridModel = new GridModel(gameModel.getNbCols(), gameModel.getNbRows());
+        gridView = new GridView(gameModel.getNbCols(), gameModel.getNbRows());
         this.gameModel = gameModel;
         
-        this.setListeners();
+        setListeners();
 
-        this.currentHoverTokenView = null;
+        currentHoverTokenView = null;
     }
 
     public GridModel getGridModel() {
-        return this.gridModel;
+        return gridModel;
     }
 
     public GridView getGridView() {
-        return this.gridView;
+        return gridView;
     }
 
     public void endGame() {
-        this.gameModel.getCurrentPlayer().increaseScore();
-        this.gameModel.notifyObservers();
+        gameModel.getCurrentPlayer().increaseScore();
+        gameModel.notifyObservers();
         
-        for (PlayerModel playerModel : this.gameModel.getPlayers()) {
+        for (PlayerModel playerModel : gameModel.getPlayers()) {
             if (playerModel.getScore() > 0)
                 FileManager.getInstance().addScore(playerModel.getUsername(), playerModel.getScore());
         }
         
-        this.gridModel.initTokens();
-        this.gridView.initTokenView();
-        this.setListeners();
+        gridModel.initTokens();
+        gridView.initTokenView();
+        setListeners();
     }
 
     private void setOnMouseHoverListeners(final TokenView tokenView) {

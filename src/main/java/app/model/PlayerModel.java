@@ -18,7 +18,7 @@ public class PlayerModel {
 
     /** Functions */
     public void increaseScore() {
-        this.score++;
+        score++;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class PlayerModel {
         if (obj instanceof PlayerModel) {
             PlayerModel playerModel = (PlayerModel) obj;
 
-            equals = playerModel.username.equals(this.username) && playerModel.color.equals(this.color);
+            equals = playerModel.username.equals(username) && playerModel.color.equals(color);
         }
 
         return equals;

@@ -14,21 +14,21 @@ public class ScoreText extends Text {
         super();
 
         this.username = username;
-        this.score = 0;
+        score = 0;
 
-        this.updateDisplay();
-        this.setStyle();
+        updateDisplay();
+        setStyle();
 
-        this.updateDisplay();
+        updateDisplay();
     }
 
     public void update(int score) {
         this.score = score;
-        this.updateDisplay();
+        updateDisplay();
     }
 
     private void updateDisplay() {
-        super.setText(username + " : " + String.valueOf(this.score));
+        super.setText(username + " : " + String.valueOf(score));
     }
 
     private void setStyle() {
@@ -37,6 +37,6 @@ public class ScoreText extends Text {
     }
 
     public String getUsername() {
-        return this.username;
+        return username;
     }
 }

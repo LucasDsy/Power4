@@ -13,29 +13,29 @@ public class MenuView extends VBox {
     public MenuView() {
         super();
 
-        this.playerNumberView = new PlayerNumberView();
-        this.sizeChooserView = new SizeChooserView();
-        this.playerDetailsViews = new VBox();
-        this.playButton = new Button("Play");
+        playerNumberView = new PlayerNumberView();
+        sizeChooserView = new SizeChooserView();
+        playerDetailsViews = new VBox();
+        playButton = new Button("Play");
 
         for (int i = 0; i < 4; i++) {
             playerDetailsViews.getChildren().add(new PlayerDetailsView());
         }
 
-        super.getChildren().addAll(this.playerNumberView, this.sizeChooserView, this.playerDetailsViews, this.playButton);
+        super.getChildren().addAll(playerNumberView, sizeChooserView, playerDetailsViews, playButton);
 
-        this.setStyle();
-        this.updatePlayerDetailsViews();
+        setStyle();
+        updatePlayerDetailsViews();
     }
 
     /** Functions */
     public void updatePlayerDetailsViews() {
-        int effectivePlayerDetailsViewsNumber = this.getEffectivePlayerDetailsViewsNumber(); // Nombre de playerDetailsViews activées
-        int neededPlayerDetailsViewsNumber = this.playerNumberView.getPlayerNumber(); // Nombre de playerDetailsViews dont ont a besoin
+        int effectivePlayerDetailsViewsNumber = getEffectivePlayerDetailsViewsNumber(); // Nombre de playerDetailsViews activées
+        int neededPlayerDetailsViewsNumber = playerNumberView.getPlayerNumber(); // Nombre de playerDetailsViews dont ont a besoin
 
         if (neededPlayerDetailsViewsNumber < effectivePlayerDetailsViewsNumber) { // Si le nombre de joueurs nécessités a baissé
             for (int i = neededPlayerDetailsViewsNumber; i < effectivePlayerDetailsViewsNumber; i++) {
-                this.playerDetailsViews.getChildren().get(i).setDisable(true);
+                playerDetailsViews.getChildren().get(i).setDisable(true);
             }
 
         } else if (neededPlayerDetailsViewsNumber > effectivePlayerDetailsViewsNumber) { // Si le nombre de joueurs nécessités a augmenté
@@ -57,32 +57,32 @@ public class MenuView extends VBox {
     }
     
     private void setStyle() {
-        this.playerDetailsViews.setSpacing(10);
+        playerDetailsViews.setSpacing(10);
         super.setSpacing(20);
         super.setPadding(new Insets(30));
     }
 
     public PlayerNumberView getPlayerNumberView() {
-        return this.playerNumberView;
+        return playerNumberView;
     }
 
     public SizeChooserView getSizeChooserView() {
-        return this.sizeChooserView;
+        return sizeChooserView;
     }
 
     public VBox getPlayerDetailsViews() {
-        return this.playerDetailsViews;
+        return playerDetailsViews;
     }
 
     public Button getPlayButton() {
-        return this.playButton;
+        return playButton;
     }
 
     public PlayerDetailsView getPlayerDetailsView(int index) {
         PlayerDetailsView playerDetailsView = null;
         
-        if (index >= 0 && index < this.playerDetailsViews.getChildren().size()) {
-            playerDetailsView = (PlayerDetailsView) this.playerDetailsViews.getChildren().get(index);
+        if (index >= 0 && index < playerDetailsViews.getChildren().size()) {
+            playerDetailsView = (PlayerDetailsView) playerDetailsViews.getChildren().get(index);
         }
 
         return playerDetailsView;
